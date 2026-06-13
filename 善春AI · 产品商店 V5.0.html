@@ -1,0 +1,2263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>善春AI · 产品商店 | 48款免费工具 + 144个训练包</title>
+<meta name="description" content="善春AI产品商店，48款免费工具+144个智能体训练包，全部免费下载。安远县趣玩网络科技工作室。">
+<meta name="theme-color" content="#090B13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+/* ============================================================
+   善春AI·产品商店 V4.0 — 全局样式
+   DNA: SCAI-STORE-V4.0-20260613
+   ============================================================ */
+:root {
+  --bg-primary: #090B13;
+  --bg-secondary: #101A33;
+  --bg-card: rgba(16, 26, 51, 0.7);
+  --bg-card-hover: rgba(22, 35, 65, 0.85);
+  --text-primary: #F8F9FC;
+  --text-secondary: #B0B8CC;
+  --text-muted: #6B7280;
+  --gold: #D4C290;
+  --gold-light: #E8D9A8;
+  --gold-dark: #B8A36E;
+  --accent-purple: #7B68EE;
+  --accent-green: #5B8C7A;
+  --border-color: rgba(212, 194, 144, 0.15);
+  --border-gold: rgba(212, 194, 144, 0.4);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-gold: 0 0 20px rgba(212, 194, 144, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --nav-height: 72px;
+  --nav-height-mobile: 56px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] {
+  --bg-primary: #F0F2F5;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(255,255,255,0.85);
+  --bg-card-hover: rgba(255,255,255,0.95);
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted: #8899aa;
+  --border-color: rgba(0,0,0,0.08);
+  --border-gold: rgba(180, 160, 100, 0.5);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-gold: 0 0 16px rgba(180, 160, 100, 0.2);
+}
+
+[data-theme="warm"] {
+  --bg-primary: #1a1410;
+  --bg-secondary: #2a1f18;
+  --bg-card: rgba(42, 31, 24, 0.75);
+  --bg-card-hover: rgba(55, 40, 30, 0.88);
+  --text-primary: #FAF3E8;
+  --text-secondary: #C4B8A8;
+  --text-muted: #8a7a6a;
+  --gold: #E8B86D;
+  --gold-light: #F0D090;
+  --gold-dark: #C89840;
+  --accent-purple: #A080E0;
+  --accent-green: #7AAA80;
+  --border-color: rgba(232, 184, 109, 0.15);
+  --border-gold: rgba(232, 184, 109, 0.4);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-gold: 0 0 20px rgba(232, 184, 109, 0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#bgCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.network-status {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  transition: background var(--transition-smooth);
+}
+.status-dot.online { background: #4CAF50; box-shadow: 0 0 6px #4CAF50; }
+.status-dot.offline { background: #9E9E9E; }
+.status-dot.slow { background: #FF9800; box-shadow: 0 0 6px #FF9800; }
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  background: rgba(9, 11, 19, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  transition: all var(--transition-smooth);
+}
+.navbar.scrolled {
+  background: rgba(9, 11, 19, 0.95);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-logo svg { width: 32px; height: 32px; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a.active {
+  color: var(--gold);
+  background: rgba(212, 194, 144, 0.08);
+}
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 24px; height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-phone {
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+.top-banner {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0; right: 0;
+  height: 36px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  color: #090B13;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  letter-spacing: 0.5px;
+  animation: bannerShimmer 3s ease-in-out infinite;
+}
+@keyframes bannerShimmer {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+.top-banner a {
+  color: #090B13;
+  text-decoration: underline;
+  margin: 0 4px;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+  padding-top: calc(var(--nav-height) + 36px);
+}
+.page-section {
+  min-height: 100vh;
+  padding: 60px 32px;
+  scroll-margin-top: calc(var(--nav-height) + 36px);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.container-wide {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.section-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+}
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-8px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #090B13;
+}
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(212, 194, 144, 0.4);
+  transform: translateY(-2px);
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+}
+.btn-outline:hover {
+  background: rgba(212, 194, 144, 0.1);
+}
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+.btn-lg { padding: 14px 28px; font-size: 16px; }
+
+.toast-container {
+  position: fixed;
+  top: 120px;
+  right: 24px;
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  color: var(--text-primary);
+  font-size: 14px;
+  animation: toastIn 0.3s ease-out, toastOut 0.3s 2.5s ease-in forwards;
+  backdrop-filter: blur(12px);
+  max-width: 360px;
+}
+@keyframes toastIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+@keyframes modalSlideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.modal-close:hover { color: #ff4444; border-color: #ff4444; }
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.tag-free { background: rgba(91, 140, 122, 0.2); color: var(--accent-green); }
+.tag-online { background: rgba(76, 175, 80, 0.2); color: #4CAF50; }
+.tag-pending { background: rgba(255, 152, 0, 0.2); color: #FF9800; }
+.tag-planning { background: rgba(158, 158, 158, 0.2); color: #9E9E9E; }
+
+@media (max-width: 1024px) {
+  .navbar { padding: 0 16px; }
+  .nav-links { display: none; }
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0; right: 0;
+    background: rgba(9,11,19,0.95);
+    backdrop-filter: blur(20px);
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    gap: 4px;
+  }
+  .nav-phone { display: none; }
+  .hamburger { display: flex; }
+  .page-section { padding: 40px 16px; }
+  .section-title { font-size: 24px; }
+}
+@media (max-width: 640px) {
+  :root { --nav-height: 56px; }
+  .top-banner { top: var(--nav-height); height: 32px; font-size: 11px; }
+  .main-content { padding-top: calc(var(--nav-height) + 32px); }
+  .page-section { padding: 32px 12px; scroll-margin-top: calc(var(--nav-height) + 32px); }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+.accordion-item { border-bottom: 1px solid var(--border-color); }
+.accordion-header {
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+.accordion-header:hover { color: var(--gold); background: rgba(212,194,144,0.04); }
+.accordion-arrow {
+  transition: transform var(--transition-spring);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); color: var(--gold); }
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.accordion-item.open .accordion-body { max-height: 3000px; }
+.accordion-subitem {
+  padding: 10px 16px 10px 36px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  border-left: 2px solid transparent;
+}
+.accordion-subitem:hover {
+  color: var(--gold);
+  border-left-color: var(--gold);
+  background: rgba(212,194,144,0.04);
+}
+.accordion-subitem span { transition: color var(--transition-fast); }
+.accordion-subitem:hover span { color: var(--text-primary); }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(212,194,144,0.1) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.side-float-card {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  z-index: 998;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  backdrop-filter: blur(12px);
+  font-size: 12px;
+  color: var(--text-secondary);
+  max-width: 180px;
+  box-shadow: var(--shadow-gold);
+  animation: floatBounce 3s ease-in-out infinite;
+}
+@keyframes floatBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.side-float-card .brand { color: var(--gold); font-weight: 600; font-size: 13px; }
+.side-float-card .phone { color: var(--text-primary); margin-top: 4px; }
+
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.footer-brand { color: var(--gold); font-weight: 600; }
+.footer-info { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
+.footer-links { margin-top: 16px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.footer-links a { color: var(--text-secondary); font-size: 12px; text-decoration: none; transition: color var(--transition-fast); }
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { color: var(--text-muted); font-size: 11px; margin-top: 20px; cursor: default; user-select: none; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  transition: all var(--transition-fast);
+}
+.search-box:focus-within { border-color: var(--border-gold); box-shadow: 0 0 0 3px rgba(212,194,144,0.1); }
+.search-box input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+}
+.search-box input::placeholder { color: var(--text-muted); }
+
+.highlight { background: rgba(212,194,144,0.3); border-radius: 2px; padding: 0 2px; color: var(--gold-light); }
+
+.download-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+.download-option:hover { border-color: var(--border-gold); background: rgba(212,194,144,0.05); }
+.download-option .icon { font-size: 28px; }
+.download-option .info { flex: 1; }
+.download-option .info strong { color: var(--text-primary); display: block; }
+.download-option .info small { color: var(--text-muted); font-size: 11px; }
+
+.steps-flow {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.step-item {
+  flex: 1; min-width: 160px; max-width: 220px;
+  text-align: center;
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+.step-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #090B13;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+/* ─── Hero轮播区 ─── */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  margin-bottom: 48px;
+}
+.hero-slide {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: none;
+}
+.hero-slide.active { opacity: 1; pointer-events: auto; }
+.hero-slide h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.hero-slide p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+.hero-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+.hero-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+.hero-dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  width: 28px;
+  border-radius: 5px;
+}
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  line-height: 1;
+}
+.hero-arrow:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--bg-card-hover);
+}
+.hero-arrow-left { left: 16px; }
+.hero-arrow-right { right: 16px; }
+
+/* ─── 数据统计 ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+  cursor: default;
+}
+.stat-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-4px);
+}
+.stat-num {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -2px;
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ─── 入口卡片 ─── */
+.entry-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.entry-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 36px 28px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+.entry-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-10px);
+  background: var(--bg-card-hover);
+}
+.entry-card span {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 16px;
+  transition: transform var(--transition-spring);
+}
+.entry-card:hover span { transform: scale(1.15); }
+.entry-card strong {
+  display: block;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.entry-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── 工作室介绍 ─── */
+.studio-intro {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 24px;
+}
+.studio-intro h2 {
+  font-size: 24px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.studio-intro p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+.studio-intro a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+}
+.studio-intro a:hover { text-decoration: underline; }
+
+/* ─── 应用页布局 ─── */
+.apps-layout {
+  display: flex;
+  gap: 24px;
+  min-height: 600px;
+}
+.apps-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.apps-main { flex: 1; min-width: 0; }
+.apps-stats-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.stat-mini {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  backdrop-filter: blur(12px);
+}
+.stat-mini strong { color: var(--gold); }
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.app-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.app-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-8px);
+  background: var(--bg-card-hover);
+}
+.app-card.highlight-card {
+  border-color: var(--gold);
+  box-shadow: 0 0 24px rgba(212,194,144,0.3);
+  animation: cardHighlight 3s ease-out;
+}
+@keyframes cardHighlight {
+  0% { box-shadow: 0 0 40px rgba(212,194,144,0.6); }
+  100% { box-shadow: 0 0 0px rgba(212,194,144,0); }
+}
+.app-card-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background: rgba(212,194,144,0.1);
+}
+.app-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.app-card-pain {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.app-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.app-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+/* ─── 训练包页 ─── */
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.training-cat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  backdrop-filter: blur(12px);
+}
+.training-cat-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-6px);
+}
+.training-cat-card .cat-icon { font-size: 40px; margin-bottom: 8px; }
+.training-cat-card .cat-name { font-weight: 600; color: var(--text-primary); }
+.training-cat-card .cat-count { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.training-detail {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-top: 20px;
+  display: none;
+}
+.training-detail.open { display: block; animation: fadeIn 0.3s ease-out; }
+.training-pack-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+}
+.training-pack-card:hover { border-color: var(--border-gold); }
+
+/* ─── 旗舰页 ─── */
+.flagship-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.flagship-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+}
+.flagship-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-6px);
+}
+.flagship-card .fs-icon { font-size: 64px; margin-bottom: 16px; }
+.flagship-card .fs-name { font-size: 20px; font-weight: 700; color: var(--gold); }
+.flagship-card .fs-desc { font-size: 14px; color: var(--text-secondary); margin: 8px 0; }
+.flagship-card .fs-features { list-style: none; padding: 0; margin: 12px 0; }
+.flagship-card .fs-features li { font-size: 13px; color: var(--text-secondary); padding: 3px 0; }
+.flagship-card .fs-features li::before { content: '✦ '; color: var(--gold); }
+
+/* ─── 定制页 ─── */
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.custom-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+}
+.custom-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-6px);
+}
+.custom-card .cc-icon { font-size: 44px; margin-bottom: 12px; }
+.custom-card .cc-title { font-weight: 600; color: var(--text-primary); font-size: 15px; }
+
+/* ─── 关于页 ─── */
+.about-story {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  backdrop-filter: blur(12px);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+.about-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-smooth);
+}
+.about-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-4px);
+}
+.about-card .ac-icon { font-size: 36px; margin-bottom: 10px; }
+.about-card .ac-title { font-weight: 600; color: var(--gold); font-size: 15px; }
+.about-card .ac-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+
+/* ─── 联系页 ─── */
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 700px;
+}
+.contact-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  backdrop-filter: blur(12px);
+}
+.contact-item strong { color: var(--text-primary); }
+.contact-item a { color: var(--gold); text-decoration: none; }
+.contact-item a:hover { text-decoration: underline; }
+
+/* ─── 设置面板 ─── */
+.settings-panel {
+  position: fixed;
+  right: 20px;
+  top: 120px;
+  z-index: 999;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 200px;
+}
+.settings-panel button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+.settings-panel button:hover {
+  border-color: var(--border-gold);
+  color: var(--gold);
+  background: rgba(212,194,144,0.05);
+}
+
+/* ─── 响应式综合 ─── */
+@media (max-width: 1024px) {
+  .hero-slider { height: 340px; }
+  .hero-slide h1 { font-size: 30px; }
+  .hero-slide p { font-size: 15px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .entry-cards { grid-template-columns: repeat(2, 1fr); }
+  .entry-cards .entry-card:last-child { grid-column: span 2; }
+  .apps-layout { flex-direction: column; }
+  .apps-sidebar { width: 100%; }
+  .apps-grid { grid-template-columns: repeat(2, 1fr); }
+  .training-grid { grid-template-columns: repeat(3, 1fr); }
+  .flagship-grid { grid-template-columns: 1fr; }
+  .custom-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-info { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .hero-slider { height: 280px; border-radius: var(--radius-lg); }
+  .hero-slide { padding: 20px; }
+  .hero-slide h1 { font-size: 24px; }
+  .hero-slide p { font-size: 13px; }
+  .hero-arrow { width: 36px; height: 36px; font-size: 22px; }
+  .hero-arrow-left { left: 8px; }
+  .hero-arrow-right { right: 8px; }
+  .hero-dot { width: 8px; height: 8px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .stat-card { padding: 20px 12px; }
+  .stat-num { font-size: 36px; }
+  .entry-cards { grid-template-columns: 1fr; gap: 16px; }
+  .entry-cards .entry-card:last-child { grid-column: span 1; }
+  .entry-card { padding: 24px 16px; }
+  .entry-card span { font-size: 40px; }
+  .entry-card strong { font-size: 17px; }
+  .studio-intro { padding: 24px 16px; }
+  .studio-intro h2 { font-size: 20px; }
+  .apps-grid { grid-template-columns: 1fr; }
+  .training-grid { grid-template-columns: repeat(2, 1fr); }
+  .flagship-grid { grid-template-columns: 1fr; }
+  .custom-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .settings-panel {
+    right: 8px; top: auto; bottom: 20px;
+    flex-direction: row; max-width: none;
+    padding: 6px; gap: 4px; border-radius: 24px;
+  }
+  .settings-panel button { padding: 6px 10px; font-size: 11px; }
+  .side-float-card { display: none; }
+}
+
+/* ─── 管理后台样式 ─── */
+.admin-panel { display: flex; flex-direction: column; height: 100%; max-height: 85vh; }
+.admin-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; border-bottom: 1px solid var(--border-color);
+}
+.admin-header h3 { color: var(--gold); margin: 0; }
+.admin-tabs {
+  display: flex; gap: 4px; padding: 12px 24px; border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary); overflow-x: auto;
+}
+.admin-tab {
+  padding: 8px 16px; border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-secondary); cursor: pointer;
+  font-size: 13px; white-space: nowrap; transition: all var(--transition-fast);
+}
+.admin-tab.active { background: var(--bg-card); color: var(--gold); border: 1px solid var(--border-gold); }
+.admin-tab:hover { color: var(--gold); }
+.admin-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.admin-table-wrap { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.admin-table th {
+  text-align: left; padding: 10px 12px; color: var(--text-muted); font-weight: 500;
+  border-bottom: 1px solid var(--border-color); white-space: nowrap;
+}
+.admin-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+.admin-table tr:hover td { background: rgba(212,194,144,0.03); }
+.admin-form { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: flex; flex-direction: column; gap: 4px; }
+.form-row label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.form-row input, .form-row select, .form-row textarea {
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color); background: var(--bg-card);
+  color: var(--text-primary); font-size: 13px; font-family: inherit;
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+  outline: none; border-color: var(--border-gold); box-shadow: 0 0 0 3px rgba(212,194,144,0.1);
+}
+.backup-card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg); padding: 20px;
+}
+.admin-table-wrap::-webkit-scrollbar { height: 4px; }
+.admin-table-wrap::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+.admin-table .btn-sm { padding: 4px 8px; font-size: 10px; }
+@media (max-width: 640px) {
+  .admin-tabs { padding: 8px 12px; }
+  .admin-tab { padding: 6px 10px; font-size: 11px; }
+  .admin-body { padding: 12px; }
+  .admin-header { padding: 12px 16px; }
+  .admin-table { font-size: 11px; }
+  .admin-table th, .admin-table td { padding: 6px 8px; }
+}
+
+details summary { padding: 8px 0; cursor: pointer; color: var(--text-muted); font-size: 12px; }
+details[open] summary { color: var(--gold); }
+</style>
+</head>
+<body data-theme="dark">
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="network-status" id="networkStatus">
+  <span class="status-dot online" id="statusDot"></span>
+  <span class="status-text" id="statusText">在线</span>
+</div>
+
+<div class="top-banner">
+  善春·极光智造 | 定制专属企业应用请联系：微信 <a href="#" onclick="copyText('he168881680');return false;">he168881680</a> | 电话 <a href="tel:18172745962">18172745962</a>
+</div>
+
+<nav class="navbar" id="navbar">
+  <a class="nav-logo" href="#home" onclick="navigateTo('home')">
+    <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#g)"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#D4C290"/><stop offset="1" stop-color="#7B68EE"/></linearGradient></defs><text x="16" y="22" text-anchor="middle" fill="#090B13" font-weight="bold" font-size="18">S</text></svg>
+    产品商店
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" onclick="navigateTo('home')" class="active">首页</a></li>
+    <li><a href="#apps" onclick="navigateTo('apps')">应用</a></li>
+    <li><a href="#training" onclick="navigateTo('training')">训练包</a></li>
+    <li><a href="#flagship" onclick="navigateTo('flagship')">旗舰</a></li>
+    <li><a href="#custom" onclick="navigateTo('custom')">定制</a></li>
+    <li><a href="#about" onclick="navigateTo('about')">关于</a></li>
+    <li><a href="#contact" onclick="navigateTo('contact')">联系</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="tel:18172745962" class="nav-phone">📞 18172745962</a>
+    <button class="theme-toggle" onclick="cycleTheme()" title="切换主题">🎨</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="main-content" id="mainContent">
+
+  <section class="page-section" id="home">
+    <div class="container">
+      <div class="hero-slider" id="heroSlider">
+        <div class="hero-slide active" data-slide="0">
+          <h1>48款免费工具·全部免费下载</h1>
+          <p>记账/英语/数学/塔罗/助眠/食谱……总有你需要的</p>
+        </div>
+        <div class="hero-slide" data-slide="1">
+          <h1>144个智能体训练包·免费开源</h1>
+          <p>内容创作/销售客服/教育学习……12大分类全覆盖</p>
+        </div>
+        <div class="hero-slide" data-slide="2">
+          <h1>想要专属定制？找我们就对了</h1>
+          <p>企业定制+功能增删+品牌替换+学习班</p>
+        </div>
+        <div class="hero-dots" id="heroDots"></div>
+        <button class="hero-arrow hero-arrow-left" onclick="prevSlide()">‹</button>
+        <button class="hero-arrow hero-arrow-right" onclick="nextSlide()">›</button>
+      </div>
+
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card"><div class="stat-num" data-target="48">0</div><div class="stat-label">免费工具</div></div>
+        <div class="stat-card"><div class="stat-num" data-target="144">0</div><div class="stat-label">训练包</div></div>
+        <div class="stat-card"><div class="stat-num" data-target="10">0</div><div class="stat-label">旗舰产品</div></div>
+        <div class="stat-card"><div class="stat-num" data-target="100" data-suffix="%">0</div><div class="stat-label">免费</div></div>
+      </div>
+
+      <div class="entry-cards">
+        <div class="entry-card" onclick="navigateTo('apps')"><span>📱</span><strong>免费工具·48款</strong><p>记账/学习/娱乐/健康，全部免费下载</p></div>
+        <div class="entry-card" onclick="navigateTo('training')"><span>🧠</span><strong>训练包·144个</strong><p>12大分类，导入AI平台即用</p></div>
+        <div class="entry-card" onclick="navigateTo('flagship')"><span>🚀</span><strong>旗舰产品·10款</strong><p>专业级独立应用</p></div>
+      </div>
+
+      <div class="studio-intro">
+        <h2>🏫 安远县趣玩网络科技工作室</h2>
+        <p>想学AI？来工作室手把手教你。从零基础到能自己做应用。</p>
+        <p>📞 <a href="tel:18172745962">18172745962</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="apps">
+    <div class="container-wide">
+      <h2 class="section-title">📱 免费工具·48款</h2>
+      <p class="section-subtitle">全部免费下载，持续更新中</p>
+      <div class="apps-layout">
+        <aside class="apps-sidebar" id="appsSidebar">
+          <div class="search-box"><span>🔍</span><input type="text" id="appSearch" placeholder="搜索48款免费工具..." oninput="filterApps()"></div>
+          <div class="accordion" id="appsAccordion"></div>
+        </aside>
+        <main class="apps-main" id="appsMain">
+          <div class="apps-stats-bar">
+            <div class="stat-mini">📦 <strong>48</strong> 款免费工具</div>
+            <div class="stat-mini">📥 全部免费下载</div>
+            <div class="stat-mini">⭐ 持续更新</div>
+          </div>
+          <div class="apps-grid" id="appsGrid"></div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="training">
+    <div class="container">
+      <h2 class="section-title">🧠 智能体训练包·144个·全部免费</h2>
+      <p class="section-subtitle">12大分类，导入AI平台即用</p>
+      <div class="training-grid" id="trainingGrid"></div>
+      <div class="training-detail" id="trainingDetail"></div>
+    </div>
+  </section>
+
+  <section class="page-section" id="flagship">
+    <div class="container">
+      <h2 class="section-title">🚀 旗舰产品·10款</h2>
+      <p class="section-subtitle">专业级独立应用</p>
+      <div class="flagship-grid" id="flagshipGrid"></div>
+    </div>
+  </section>
+
+  <section class="page-section" id="custom">
+    <div class="container">
+      <h2 class="section-title">🎨 企业定制</h2>
+      <p class="section-subtitle">按需定制，专属你的应用</p>
+      <div class="custom-grid" id="customGrid"></div>
+      <div class="studio-intro" style="margin-top:40px;">
+        <h2>🏫 安远县趣玩网络科技工作室</h2>
+        <p>想学AI？来工作室手把手教你。从零基础到能自己做应用。</p>
+        <p>咨询电话：📞 <a href="tel:18172745962">18172745962</a></p>
+      </div>
+      <div class="steps-flow" style="margin-top:40px;">
+        <div class="step-item"><div class="step-num">1</div><strong>需求沟通</strong><p style="color:var(--text-muted);font-size:13px;">了解您的业务场景</p></div>
+        <div class="step-item"><div class="step-num">2</div><strong>方案确认</strong><p style="color:var(--text-muted);font-size:13px;">定制功能清单</p></div>
+        <div class="step-item"><div class="step-num">3</div><strong>开发交付</strong><p style="color:var(--text-muted);font-size:13px;">完整可商用产品</p></div>
+        <div class="step-item"><div class="step-num">4</div><strong>验收上线</strong><p style="color:var(--text-muted);font-size:13px;">持续维护更新</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="about">
+    <div class="container">
+      <h2 class="section-title">💡 关于善春AI</h2>
+      <div class="about-story"><p>从零基础起步，一步一步自学，到如今构建完整产品矩阵。48款免费工具+144个训练包+10款旗舰产品，全部免费开放。</p></div>
+      <h3 style="color:var(--gold);margin-top:32px;">设计原则</h3>
+      <div class="about-grid" id="principlesGrid"></div>
+      <h3 style="color:var(--gold);margin-top:32px;">核心能力</h3>
+      <div class="about-grid" id="capabilitiesGrid"></div>
+    </div>
+  </section>
+
+  <section class="page-section" id="contact">
+    <div class="container">
+      <h2 class="section-title">📬 联系我们</h2>
+      <p class="section-subtitle">无论你是想用免费工具、定制专属应用、还是学习AI，都欢迎联系</p>
+      <div class="contact-info">
+        <div class="contact-item">📞 <strong>电话：</strong><a href="tel:18172745962">18172745962</a></div>
+        <div class="contact-item">💬 <strong>微信：</strong>he168881680 <button class="btn btn-sm btn-outline" onclick="copyText('he168881680')">复制</button></div>
+        <div class="contact-item">📧 <strong>邮箱：</strong>352522733@qq.com</div>
+        <div class="contact-item">📍 <strong>地址：</strong>安远县趣玩网络科技工作室</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="side-float-card">
+  <div class="brand">善春AI · 产品商店</div>
+  <div>48款免费工具</div>
+  <div class="phone">📞 18172745962</div>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">善春AI / SHANCHUN</div>
+  <div class="footer-info">安远县趣玩网络科技工作室 | 48款免费工具 | 144个训练包 | 10款旗舰产品</div>
+  <div class="footer-links">
+    <a href="#home">首页</a><a href="#apps">应用</a><a href="#training">训练包</a>
+    <a href="#flagship">旗舰</a><a href="#custom">定制</a><a href="#about">关于</a><a href="#contact">联系</a>
+  </div>
+  <div class="footer-copy" id="footerCopy" onclick="handleFooterClick()">
+    © 2026 安远县趣玩网络科技工作室 · 保留所有权利 | 宣传展示：18172745962
+  </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+<div id="modalContainer"></div>
+
+<script>
+// ============================================================
+// 善春AI·产品商店 V4.0 — JavaScript 核心引擎
+// DNA: SCAI-STORE-V4.0-20260613
+// ============================================================
+
+const APP_VERSION = 'V4.0';
+const PHONE_DISPLAY = '18172745962';
+const PHONE_VERIFY = '18942286663';
+const WX_FRAG1 = 'he168', WX_FRAG2 = '881680';
+const EMAIL_FRAG1 = '352522733', EMAIL_FRAG2 = '@qq.com';
+const STUDIO_FRAG1 = '安远县', STUDIO_FRAG2 = '趣玩网络', STUDIO_FRAG3 = '科技工作室';
+const QUARK_MAIN = 'https://pan.quark.cn/s/ac0b44a6f0e9';
+const LANZOU_BAK = 'https://wwr.lanzoui.com/b002vyhn2b';
+const MEMBER_SHOP = 'https://pan.quark.cn/s/78670a1e777c';
+
+let currentTheme = localStorage.getItem('scai_theme') || 'dark';
+let currentPage = 'home';
+let footerClickCount = 0;
+let footerClickTimer = null;
+let soundEnabled = localStorage.getItem('scai_sound') !== 'false';
+let heroCurrentSlide = 0;
+let heroAutoTimer = null;
+let activeAccordion = localStorage.getItem('scai_accordion') || null;
+let appSearchTerm = '';
+let adminCurrentTab = 'products';
+let adminEditId = null;
+
+// ─── 网络状态 ───
+function updateNetworkStatus() {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const online = navigator.onLine;
+  dot.className = 'status-dot ' + (online ? 'online' : 'offline');
+  text.textContent = online ? '在线' : '离线模式';
+  document.querySelectorAll('.network-dependent').forEach(b => {
+    b.disabled = !online;
+    b.style.opacity = online ? '1' : '0.5';
+    b.title = online ? '' : '网络不可用，请连接后重试';
+  });
+}
+window.addEventListener('online', () => { updateNetworkStatus(); showToast('✅ 网络已连接'); });
+window.addEventListener('offline', () => { updateNetworkStatus(); showToast('⚠️ 当前处于离线模式，部分功能不可用'); });
+updateNetworkStatus();
+
+// ─── Toast ───
+function showToast(msg, duration = 2500) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), duration + 300);
+}
+
+// ─── 复制 ───
+function copyText(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('已复制：' + text));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('已复制：' + text);
+  }
+}
+
+// ─── 主题 ───
+function cycleTheme() {
+  const themes = ['dark', 'light', 'warm'];
+  const idx = themes.indexOf(currentTheme);
+  currentTheme = themes[(idx + 1) % 3];
+  document.body.setAttribute('data-theme', currentTheme);
+  localStorage.setItem('scai_theme', currentTheme);
+  showToast('主题已切换：' + currentTheme);
+}
+document.body.setAttribute('data-theme', currentTheme);
+
+// ─── 导航 ───
+function navigateTo(page) {
+  currentPage = page;
+  const section = document.getElementById(page);
+  if (section) section.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + page);
+  });
+  if (window.innerWidth <= 1024) {
+    document.getElementById('navLinks').classList.remove('mobile-open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+}
+function toggleMobileMenu() {
+  document.getElementById('navLinks').classList.toggle('mobile-open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+// ─── 滚动监听 ───
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+  const sections = ['home','apps','training','flagship','custom','about','contact'];
+  let current = 'home';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { const rect = el.getBoundingClientRect(); if (rect.top <= 200) current = id; }
+  });
+  if (current !== currentPage) {
+    currentPage = current;
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// ─── Hero轮播 ───
+function initHero() {
+  const dots = document.getElementById('heroDots');
+  dots.innerHTML = [0,1,2].map(i => `<span class="hero-dot${i===0?' active':''}" onclick="goToSlide(${i})"></span>`).join('');
+  heroAutoTimer = setInterval(nextSlide, 4000);
+}
+function nextSlide() { goToSlide((heroCurrentSlide + 1) % 3); }
+function prevSlide() { goToSlide((heroCurrentSlide + 2) % 3); }
+function goToSlide(n) {
+  document.querySelectorAll('.hero-slide').forEach((s,i) => s.classList.toggle('active', i===n));
+  document.querySelectorAll('.hero-dot').forEach((d,i) => d.classList.toggle('active', i===n));
+  heroCurrentSlide = n;
+  clearInterval(heroAutoTimer);
+  heroAutoTimer = setInterval(nextSlide, 4000);
+}
+initHero();
+
+// ─── 数字动画 ───
+function animateStats() {
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const duration = 1000;
+    const start = performance.now();
+    function update(ts) {
+      const elapsed = ts - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      current = Math.round(target * eased);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+// ─── Canvas星云 ───
+function initCanvas() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouseX = -1000, mouseY = -1000;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 2.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.3
+    });
+  }
+  document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+  document.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)/1.5);
+    grad.addColorStop(0, 'rgba(16,26,51,0.3)');
+    grad.addColorStop(0.5, 'rgba(9,11,19,0.2)');
+    grad.addColorStop(1, 'rgba(9,11,19,0)');
+    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      const dx = mouseX - p.x, dy = mouseY - p.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 200) { const f = (200 - dist) / 200 * 0.5; p.vx += dx/dist * f * 0.02; p.vy += dy/dist * f * 0.02; }
+      p.vx *= 0.995; p.vy *= 0.995;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(212,194,144,${p.alpha})`; ctx.fill();
+    });
+    if (mouseX > 0 && mouseY > 0) {
+      const glow = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 180);
+      glow.addColorStop(0, 'rgba(212,194,144,0.08)');
+      glow.addColorStop(1, 'rgba(212,194,144,0)');
+      ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(mouseX, mouseY, 180, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+initCanvas();
+
+// ─── 语音 ───
+function speakText(text) {
+  if (!soundEnabled) return;
+  if (window.speechSynthesis) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-CN'; u.rate = 0.88; u.pitch = 1.25;
+    const voices = window.speechSynthesis.getVoices();
+    const fv = voices.find(v => v.lang.includes('zh-CN') && (v.name.includes('Female') || v.name.includes('Tingting') || v.name.includes('Xiaoxiao')));
+    if (fv) u.voice = fv;
+    window.speechSynthesis.speak(u);
+  }
+}
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  localStorage.setItem('scai_sound', soundEnabled);
+  showToast(soundEnabled ? '🔊 语音已开启' : '🔇 语音已关闭');
+}
+
+// ─── 管理后台入口 ───
+function handleFooterClick() {
+  footerClickCount++;
+  clearTimeout(footerClickTimer);
+  footerClickTimer = setTimeout(() => { footerClickCount = 0; }, 2000);
+  if (footerClickCount >= 5) { footerClickCount = 0; showAdminPasswordModal(); }
+}
+function showAdminPasswordModal() {
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h3>🔐 管理后台</h3>
+        <p style="color:var(--text-secondary);font-size:13px;margin:12px 0;">请输入管理密码</p>
+        <input type="password" id="adminPwd" placeholder="输入密码" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);margin-bottom:12px;">
+        <button class="btn btn-primary" onclick="verifyAdmin()">进入后台</button>
+      </div>
+    </div>`;
+}
+function verifyAdmin() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === 'shanchun2026') { closeModal(); openAdminPanel(); }
+  else { showToast('密码错误'); }
+}
+function closeModal() { document.getElementById('modalContainer').innerHTML = ''; }
+
+// ─── 检查更新 ───
+function checkUpdate() {
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h3>📦 选择下载渠道</h3>
+        <div style="margin-top:16px;">
+          <div class="download-option" onclick="window.open('${QUARK_MAIN}','_blank')"><span class="icon">🚀</span><div class="info"><strong>夸克网盘（推荐）</strong><small>速度快·收益支持</small></div></div>
+          <div class="download-option" onclick="window.open('${LANZOU_BAK}','_blank')"><span class="icon">📁</span><div class="info"><strong>蓝奏云（备用）</strong><small>提取码：SCAI</small></div></div>
+          <div class="download-option" onclick="window.open('${MEMBER_SHOP}','_blank')"><span class="icon">⭐</span><div class="info"><strong>会员专属资源商店</strong><small>提取码：aJB3</small></div></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ─── 数据导出导入 ───
+function exportData() {
+  const data = { products: getAllProducts(), trainingPacks: getAllTrainingPacks(), version: APP_VERSION, exportDate: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'scai-store-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(url); showToast('✅ 数据已导出');
+}
+
+// ─── 48款产品数据 ───
+const ALL_PRODUCTS = [
+  { id:"qingyu-jizhang",name:"轻羽记账",category:"办公工具",icon:"💳",painPoint:"记不清楚钱花在哪？",description:"3秒记账，每月自动分析",version:"V3.0",fileSize:"420KB",platforms:"电脑/平板/手机",features:["3秒极速记账","月度收支报表","智能分类统计","数据导出CSV","多账本管理","预算超支提醒"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"factory-jizhang",name:"工厂记账本",category:"办公工具",icon:"🏭",painPoint:"员工计件算薪太麻烦？",description:"扫码记账+自动统计",version:"V2.5",fileSize:"380KB",platforms:"电脑/平板/手机",features:["员工扫码记账","计件工资自动算","日/周/月报表","多工种支持","数据导出","权限分级"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingshang-product",name:"轻商·商品录入",category:"办公工具",icon:"📋",painPoint:"商品信息整理太乱？",description:"一键录入+导出CSV",version:"V1.8",fileSize:"310KB",platforms:"电脑/平板/手机",features:["商品信息快速录入","条码扫描","批量导入","导出CSV/Excel","分类管理","库存预警"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"furniture-sales",name:"家具销售助手",category:"办公工具",icon:"🪑",painPoint:"客户太多记不住？",description:"跟进管理+AI写文案",version:"V2.0",fileSize:"460KB",platforms:"电脑/平板/手机",features:["客户信息管理","跟进记录","AI销售文案生成","产品图册","报价单生成","成交率统计"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingsuan-qimeng",name:"轻算·启蒙",category:"数学学习",icon:"🐰",painPoint:"幼儿园宝宝怎么学数学？",description:"兔子老师+数数游戏",version:"V2.2",fileSize:"520KB",platforms:"电脑/平板/手机",features:["兔子老师语音引导","1-20数数游戏","图形认知","大小比较","简单加减法","成就奖励系统"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingsuan-xiaoxue",name:"轻算·小学",category:"数学学习",icon:"✏️",painPoint:"口算总出错？",description:"分级闯关+每道题有解析",version:"V3.1",fileSize:"480KB",platforms:"电脑/平板/手机",features:["分级闯关模式","口算专项训练","应用题解析","错题本自动整理","计算速度计时","家长查看报告"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingsuan-chuzhong",name:"轻算·初中",category:"数学学习",icon:"🦉",painPoint:"函数几何学不会？",description:"猫头鹰学长讲给你听",version:"V2.8",fileSize:"550KB",platforms:"电脑/平板/手机",features:["函数图像可视化","几何动态演示","方程分步讲解","考点归纳","真题模拟","智能推题"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingsuan-gaozhong",name:"轻算·高中",category:"数学学习",icon:"🦅",painPoint:"高考数学怎么冲刺？",description:"鹰学长+量子思维",version:"V3.0",fileSize:"620KB",platforms:"电脑/平板/手机",features:["导数/圆锥曲线专题","概率统计精讲","压轴题拆解","考场时间策略","全国卷/新高考适配","思维导图生成"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingsuan-calc",name:"轻算·计算器",category:"数学学习",icon:"🔢",painPoint:"复杂算式不会算？",description:"表达式输入+语音播报",version:"V1.5",fileSize:"260KB",platforms:"电脑/平板/手机",features:["自然表达式输入","分步计算展示","语音播报结果","历史记录","科学计算模式","单位换算"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingci-speed",name:"轻词·单词速记",category:"英语学习",icon:"📇",painPoint:"单词记不住？",description:"卡片翻转+发音跟读+拼写",version:"V3.2",fileSize:"440KB",platforms:"电脑/平板/手机",features:["卡片翻转记忆","真人发音跟读","拼写测试","艾宾浩斯复习","词库自由导入","学习统计"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingci-xiaoxue",name:"轻词·小学",category:"英语学习",icon:"🌈",painPoint:"小学生怎么学英语？",description:"双模式+发音挑战+小语种",version:"V2.5",fileSize:"500KB",platforms:"电脑/平板/手机",features:["游戏闯关模式","发音挑战打分","单词跟读","图片联想记忆","多语种启蒙","亲子对战"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingci-chuzhong",name:"轻词·初中",category:"英语学习",icon:"📖",painPoint:"初中英语难提升？",description:"语法进阶+听说训练",version:"V2.3",fileSize:"510KB",platforms:"电脑/平板/手机",features:["语法专项训练","听力模拟考场","阅读理解精讲","完形填空技巧","写作模板","中考真题"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingci-gaozhong",name:"轻词·高中",category:"英语学习",icon:"🎯",painPoint:"高考英语冲刺？",description:"完形+阅读+写作",version:"V2.8",fileSize:"580KB",platforms:"电脑/平板/手机",features:["3500考纲词汇","阅读理解提速","完形填空技巧","写作高级句型","听力满分训练","真题模拟考试"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingwen-qimeng",name:"轻文·启蒙",category:"语文学习",icon:"🧸",painPoint:"宝宝怎么认字？",description:"积木对话+象形涂鸦+绘本",version:"V2.0",fileSize:"480KB",platforms:"电脑/平板/手机",features:["积木拼字游戏","象形文字涂鸦","绘本故事朗读","笔画描红","汉字发音跟读","识字进度追踪"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingwen-chengyu",name:"轻文·成语",category:"语文学习",icon:"📜",painPoint:"成语记不住？",description:"3000+词典+接龙+飞花令",version:"V2.6",fileSize:"390KB",platforms:"电脑/平板/手机",features:["3000+成语词典","成语接龙对战","飞花令游戏","典故故事","分类成语","每日一成语"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingwen-xiaoxue",name:"轻文·小学",category:"语文学习",icon:"📚",painPoint:"小学语文怎么学？",description:"识字+阅读+作文",version:"V2.4",fileSize:"530KB",platforms:"电脑/平板/手机",features:["分级识字","阅读理解训练","作文指导","古诗背诵","拼音练习","好词好句积累"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingkao-gaozhong",name:"轻考·高中",category:"考试冲刺",icon:"🏆",painPoint:"全科难点怎么突破？",description:"命题逻辑+失分规律",version:"V2.9",fileSize:"640KB",platforms:"电脑/平板/手机",features:["命题逻辑分析","失分规律总结","全科知识点图谱","考场时间管理","心理调适","志愿填报参考"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingli-chuzhong",name:"轻理·初中",category:"考试冲刺",icon:"🔬",painPoint:"物化生怎么学？",description:"实验+跨学科+建模",version:"V2.2",fileSize:"560KB",platforms:"电脑/平板/手机",features:["虚拟实验演示","物理公式推导","化学方程式配平","生物知识图谱","跨学科综合","中考真题"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingli-gaozhong",name:"轻理·高中",category:"考试冲刺",icon:"⚡",painPoint:"理科综合怎么拿高分？",description:"难点拆解+真题模拟",version:"V3.0",fileSize:"680KB",platforms:"电脑/平板/手机",features:["物理模型分析","化学工业流程","生物遗传计算","理综时间策略","压轴题专题","全国卷模拟"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingyun-taluo",name:"轻运·塔罗",category:"创意娱乐",icon:"🔮",painPoint:"想抽塔罗牌？",description:"3D翻牌+78张完整解读",version:"V3.5",fileSize:"720KB",platforms:"电脑/平板/手机",features:["78张完整塔罗牌","3D翻牌动画","牌阵解读","正逆位含义","每日一抽","牌义词典"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingyun-taluomax",name:"轻运·塔罗MAX",category:"创意娱乐",icon:"✨",painPoint:"想要更神秘学？",description:"七合一塔罗+星座+雷诺曼",version:"V2.0",fileSize:"890KB",platforms:"电脑/平板/手机",features:["塔罗+雷诺曼+神谕卡","星座运势","星盘解读","卢恩符文","生命灵数","能量日报","冥想引导"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingqu-juece",name:"轻趣·决策",category:"创意娱乐",icon:"🎰",painPoint:"选择困难症？",description:"转盘+骰子+硬币+老虎机",version:"V1.6",fileSize:"340KB",platforms:"电脑/平板/手机",features:["幸运转盘","随机骰子","抛硬币","老虎机","自定义选项","历史记录"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"answer-book",name:"答案之书",category:"创意娱乐",icon:"📖",painPoint:"心中有疑问？",description:"翻开答案之书给你回响",version:"V1.8",fileSize:"280KB",platforms:"电脑/平板/手机",features:["翻书动画","500+智慧答案","每日一句","书签收藏","分享卡片","多种封面"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingju-shortdrama",name:"轻剧·短剧",category:"创意娱乐",icon:"🎬",painPoint:"无聊想追剧？",description:"30部短剧免费看",version:"V2.1",fileSize:"580KB",platforms:"电脑/平板/手机",features:["30部短剧合集","分类筛选","续播记忆","收藏追剧","离线缓存","清晰度切换"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"star-fighter",name:"星际战机",category:"创意娱乐",icon:"🚀",painPoint:"想玩街机？",description:"3关BOSS+武器升级+排行榜",version:"V2.3",fileSize:"490KB",platforms:"电脑/平板/手机",features:["3关BOSS战","武器升级系统","排行榜","触屏+键盘双模式","粒子特效","音效沉浸"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingxian-guitar",name:"轻弦·吉他",category:"创意娱乐",icon:"🎸",painPoint:"和弦记不住？",description:"2000+指法+离线发声+反查",version:"V2.4",fileSize:"410KB",platforms:"电脑/平板/手机",features:["2000+和弦指法","离线发声","和弦反查","调式转换","节拍器","常用进行"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"game-factory",name:"游戏模板工厂",category:"创意娱乐",icon:"🎮",painPoint:"想做游戏？",description:"8大类型+工程执行单",version:"V2.7",fileSize:"650KB",platforms:"电脑/平板/手机",features:["8大游戏类型模板","工程执行单","关卡设计器","美术资源包","音效素材库","一键导出"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingmian-whitenoise",name:"轻眠·白噪音",category:"健康生活",icon:"🌙",painPoint:"睡不着？",description:"32种自然音效+呼吸引导",version:"V3.0",fileSize:"520KB",platforms:"电脑/平板/手机",features:["32种自然音效","混音播放","呼吸引导动画","定时关闭","睡眠记录","冥想音乐"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingshi-calorie",name:"轻食·热量",category:"健康生活",icon:"🥗",painPoint:"减肥不知道吃多少？",description:"500+食物数据库",version:"V2.2",fileSize:"360KB",platforms:"电脑/平板/手机",features:["500+食物热量数据","扫码识别","每日摄入记录","热量超标提醒","营养素分析","体重追踪"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingshi-recipe",name:"轻食·食谱",category:"健康生活",icon:"🍳",painPoint:"健身餐不会做？",description:"50条食谱+多平台文案",version:"V1.9",fileSize:"380KB",platforms:"电脑/平板/手机",features:["50条健身食谱","营养配比计算","多平台文案生成","食材清单","步骤图文","收藏夹"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"meditation-breath",name:"冥想呼吸助手",category:"健康生活",icon:"🧘",painPoint:"压力大焦虑？",description:"4种呼吸法+冥想引导",version:"V2.5",fileSize:"400KB",platforms:"电脑/平板/手机",features:["4种呼吸法","冥想引导音频","压力自评","每日打卡","心情日记","放松音乐"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingdong-sport",name:"轻动·运动打卡",category:"健康生活",icon:"🏃",painPoint:"想坚持运动？",description:"打卡记录+体重追踪",version:"V1.7",fileSize:"320KB",platforms:"电脑/平板/手机",features:["运动打卡","体重变化图","运动类型统计","连续打卡奖励","社区分享","目标设定"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"product-store",name:"产品商店",category:"综合工具",icon:"🏪",painPoint:"就是你正在用的这个网站",description:"48款工具全部免费下载",version:"V4.0",fileSize:"750KB",platforms:"电脑/平板/手机",features:["48款产品展示","144个训练包","管理后台","3套主题","Canvas星云背景","全部免费"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"},
+  { id:"qingji-todo",name:"轻记·待办清单",category:"综合工具",icon:"✅",painPoint:"事情太多记不住？",description:"番茄钟+日程管理",version:"V2.0",fileSize:"350KB",platforms:"电脑/平板/手机",features:["待办清单","番茄钟计时","日程管理","优先级排序","提醒通知","完成统计"],downloadLinks:{quark:"https://pan.quark.cn/s/ac0b44a6f0e9",lanzou:"https://wwr.lanzoui.com/b002vyhn2b",baidu:"https://pan.baidu.com/s/xxxxx"},status:"online"}
+];
+
+console.log('✅ 产品总数：' + ALL_PRODUCTS.length + ' 款');
+
+function getAllProducts() {
+  const custom = JSON.parse(localStorage.getItem('scai_custom_products') || '[]');
+  if (custom.length > 0) {
+    const merged = [...ALL_PRODUCTS];
+    custom.forEach(cp => {
+      if (cp._deleted) { const idx = merged.findIndex(p => p.id === cp.id); if (idx >= 0) merged.splice(idx, 1); }
+      else { const idx = merged.findIndex(p => p.id === cp.id); if (idx >= 0) merged[idx] = cp; else merged.push(cp); }
+    });
+    return merged;
+  }
+  return ALL_PRODUCTS;
+}
+
+function getProductsByCategory() {
+  const products = getAllProducts();
+  const cats = {};
+  products.forEach(p => { if (!cats[p.category]) cats[p.category] = []; cats[p.category].push(p); });
+  return cats;
+}
+
+function buildAccordion() {
+  const accordion = document.getElementById('appsAccordion');
+  if (!accordion) return;
+  const cats = getProductsByCategory();
+  const catIcons = { '办公工具':'📁','数学学习':'🔢','英语学习':'🔤','语文学习':'📝','考试冲刺':'🎯','创意娱乐':'🎨','健康生活':'💚','综合工具':'🔧' };
+  let html = '';
+  Object.keys(cats).forEach(cat => {
+    const products = cats[cat];
+    const isOpen = activeAccordion === cat;
+    html += `<div class="accordion-item ${isOpen?'open':''}" data-category="${cat}">
+      <div class="accordion-header" onclick="toggleAccordion('${cat}')"><span>${catIcons[cat]||'📦'} ${cat}（${products.length}款）</span><span class="accordion-arrow">▼</span></div>
+      <div class="accordion-body"${isOpen?' style="max-height:3000px;"':''}>${products.map(p => `<div class="accordion-subitem" onclick="scrollToProduct('${p.id}')" data-product-id="${p.id}">${p.icon} ${p.name}<span style="font-size:10px;color:var(--text-muted);display:block;">${p.painPoint}</span></div>`).join('')}</div>
+    </div>`;
+  });
+  accordion.innerHTML = html;
+}
+
+function toggleAccordion(cat) {
+  const items = document.querySelectorAll('.accordion-item');
+  items.forEach(item => {
+    if (item.dataset.category === cat) {
+      const isOpen = item.classList.contains('open');
+      if (isOpen) { item.classList.remove('open'); item.querySelector('.accordion-body').style.maxHeight = '0'; activeAccordion = null; }
+      else { item.classList.add('open'); item.querySelector('.accordion-body').style.maxHeight = '3000px'; activeAccordion = cat; }
+    } else { item.classList.remove('open'); item.querySelector('.accordion-body').style.maxHeight = '0'; }
+  });
+  if (activeAccordion !== cat) activeAccordion = cat;
+  localStorage.setItem('scai_accordion', activeAccordion || '');
+}
+
+function buildProductGrid(filterText = '') {
+  const grid = document.getElementById('appsGrid');
+  if (!grid) return;
+  let products = getAllProducts();
+  if (filterText) {
+    const term = filterText.toLowerCase();
+    products = products.filter(p => p.name.toLowerCase().includes(term) || p.painPoint.toLowerCase().includes(term) || p.category.toLowerCase().includes(term) || p.description.toLowerCase().includes(term) || p.features.some(f => f.toLowerCase().includes(term)));
+  }
+  function highlight(text) {
+    if (!filterText) return text;
+    const regex = new RegExp(`(${filterText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  }
+  if (products.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted);"><p style="font-size:48px;">🔍</p><p>未找到相关产品</p><p style="font-size:13px;">试试其他关键词</p></div>`;
+    return;
+  }
+  grid.innerHTML = products.map(p => `
+    <div class="app-card" id="card-${p.id}" data-product-id="${p.id}">
+      <div class="app-card-icon">${p.icon}</div>
+      <div class="app-card-name">${highlight(p.name)}</div>
+      <div class="app-card-pain">💡 ${highlight(p.painPoint)}</div>
+      <div style="font-size:13px;color:var(--text-secondary);">${highlight(p.description)}</div>
+      <div class="app-card-meta"><span class="tag tag-free">免费</span><span style="font-size:11px;color:var(--text-muted);">${p.version}</span><span style="font-size:11px;color:var(--text-muted);">${p.fileSize}</span></div>
+      <div class="app-card-actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openDownloadModal('${p.id}')">📥 下载</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetailModal('${p.id}')">ℹ️ 详情</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterApps() {
+  const term = document.getElementById('appSearch').value.trim();
+  appSearchTerm = term;
+  buildProductGrid(term);
+  if (term && term.length >= 1) {
+    const products = getAllProducts();
+    const matchedCats = new Set();
+    products.forEach(p => { if (p.name.toLowerCase().includes(term.toLowerCase()) || p.painPoint.toLowerCase().includes(term.toLowerCase()) || p.category.toLowerCase().includes(term.toLowerCase())) matchedCats.add(p.category); });
+    document.querySelectorAll('.accordion-item').forEach(item => { if (matchedCats.has(item.dataset.category)) { item.classList.add('open'); item.querySelector('.accordion-body').style.maxHeight = '3000px'; } });
+  }
+}
+
+function scrollToProduct(productId) {
+  navigateTo('apps');
+  setTimeout(() => {
+    const card = document.getElementById('card-' + productId);
+    if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); card.classList.add('highlight-card'); setTimeout(() => card.classList.remove('highlight-card'), 3500); }
+  }, 400);
+}
+
+function openDownloadModal(productId) {
+  const p = getAllProducts().find(prod => prod.id === productId);
+  if (!p) return;
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()"><div class="modal" style="max-width:550px;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="font-size:40px;">${p.icon}</span><div><h3 style="color:var(--gold);">${p.name}</h3><span style="font-size:12px;color:var(--text-muted);">${p.version} | ${p.fileSize}</span></div></div>
+      <p style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;">选择下载方式：</p>
+      <div class="download-option" onclick="window.open('${p.downloadLinks.quark}','_blank')"><span class="icon">📦</span><div class="info"><strong>夸克网盘（推荐）</strong><small>${p.downloadLinks.quark}</small></div><button class="btn btn-sm btn-primary" onclick="event.stopPropagation();window.open('${p.downloadLinks.quark}','_blank')">下载</button><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();copyText('${p.downloadLinks.quark}')">复制</button></div>
+      <div class="download-option" onclick="window.open('${p.downloadLinks.lanzou}','_blank')"><span class="icon">📁</span><div class="info"><strong>蓝奏云（备用）</strong><small>提取码：SCAI</small></div><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();window.open('${p.downloadLinks.lanzou}','_blank')">下载</button><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();copyText('${p.downloadLinks.lanzou}')">复制</button></div>
+      <div class="download-option" onclick="window.open('${p.downloadLinks.baidu}','_blank')"><span class="icon">📂</span><div class="info"><strong>百度网盘（备用）</strong><small>提取码：SCAI</small></div><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();window.open('${p.downloadLinks.baidu}','_blank')">下载</button><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();copyText('${p.downloadLinks.baidu}')">复制</button></div>
+      <details style="margin-top:12px;"><summary>📲 下载后如何安装？</summary><p style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.6;">1. 下载HTML文件到电脑<br>2. 双击即可在浏览器中打开使用<br>3. 手机用户：下载后用文件管理器找到文件，选择「浏览器」打开<br>4. 所有产品均为单文件HTML，无需安装</p></details>
+    </div></div>`;
+  showToast('📥 ' + p.name + ' 下载弹窗已打开');
+}
+
+function openDetailModal(productId) {
+  const p = getAllProducts().find(prod => prod.id === productId);
+  if (!p) return;
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeModal()"><div class="modal" style="max-width:550px;" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><span style="font-size:48px;">${p.icon}</span><div><h3 style="color:var(--gold);">${p.name}</h3><span style="font-size:12px;color:var(--text-muted);">${p.version} | 更新：2026-06-13</span></div></div>
+      <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">📝 痛点</strong><p style="color:var(--text-secondary);font-size:13px;margin-top:4px;">${p.painPoint}</p></div>
+      <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">✨ 核心功能</strong><ul style="color:var(--text-secondary);font-size:13px;padding-left:20px;margin-top:4px;">${p.features.map(f => `<li>${f}</li>`).join('')}</ul></div>
+      <div style="display:flex;gap:24px;margin-bottom:16px;flex-wrap:wrap;"><div><strong style="color:var(--text-primary);">💾 文件大小</strong><p style="color:var(--text-secondary);font-size:13px;">${p.fileSize}</p></div><div><strong style="color:var(--text-primary);">📱 适配平台</strong><p style="color:var(--text-secondary);font-size:13px;">${p.platforms}</p></div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn btn-primary" onclick="closeModal();openDownloadModal('${p.id}')">📥 立即下载</button><button class="btn btn-outline" onclick="copyText('${p.downloadLinks.quark}');showToast('链接已复制')">📋 复制链接</button></div>
+      <p style="margin-top:16px;font-size:12px;color:var(--text-muted);text-align:center;">💡 需要定制版本？联系善春AI：<a href="tel:18172745962" style="color:var(--gold);">18172745962</a></p>
+    </div></div>`;
+  showToast('ℹ️ ' + p.name + ' 详情已打开');
+}
+
+// ─── 144个训练包完整数据（精简为实际内置，完整列表见上文） ───
+const ALL_TRAINING_PACKS = [
+  { id:"tc001",category:"内容创作",name:"公众号爆文训练包",desc:"10w+爆文结构+标题公式+排版模板",audience:"公众号运营/自媒体",features:["爆文标题公式","文章结构模板","排版美化","数据分析"]},
+  { id:"tc002",category:"内容创作",name:"小红书种草训练包",desc:"种草文案+封面设计+关键词布局",audience:"小红书博主/电商",features:["种草文案模板","封面设计","标签策略","互动话术"]},
+  { id:"tc003",category:"内容创作",name:"抖音口播训练包",desc:"口播脚本+镜头表现+节奏控制",audience:"抖音创作者",features:["口播脚本","镜头感训练","节奏把控","热点借势"]},
+  { id:"tc004",category:"内容创作",name:"知乎回答训练包",desc:"高赞回答结构+专业背书+引流技巧",audience:"知乎创作者",features:["回答框架","专业知识包装","引流策略","盐值提升"]},
+  { id:"tc005",category:"内容创作",name:"B站视频脚本训练包",desc:"视频脚本+弹幕互动+分区策略",audience:"B站UP主",features:["视频脚本结构","弹幕互动设计","分区选择","封面标题"]},
+  { id:"tc006",category:"内容创作",name:"微博营销训练包",desc:"热搜借势+话题运营+粉丝互动",audience:"微博运营/品牌",features:["热搜借势","话题创建","粉丝互动","危机公关"]},
+  { id:"tc007",category:"内容创作",name:"快手带货训练包",desc:"老铁话术+直播节奏+信任建立",audience:"快手主播",features:["带货话术","直播流程","信任建立","粉丝运营"]},
+  { id:"tc008",category:"内容创作",name:"百家号文章训练包",desc:"百度SEO+图文结构+流量获取",audience:"百家号作者",features:["SEO优化","图文排版","流量获取","收益提升"]},
+  { id:"tc009",category:"内容创作",name:"朋友圈文案训练包",desc:"日常人设+产品软广+互动设计",audience:"微商/私域运营",features:["人设打造","软广植入","互动文案","节日营销"]},
+  { id:"tc010",category:"内容创作",name:"短视频标题优化包",desc:"标题公式+关键词+完播率提升",audience:"短视频创作者",features:["标题模板","关键词挖掘","A/B测试","完播优化"]},
+  { id:"tc011",category:"内容创作",name:"情感语录生成包",desc:"情感文案+配图建议+多平台适配",audience:"情感博主",features:["语录生成","配图推荐","多平台分发","互动引导"]},
+  { id:"tc012",category:"内容创作",name:"探店视频脚本包",desc:"探店流程+镜头语言+评价话术",audience:"探店博主",features:["探店流程","镜头设计","评价模板","商家沟通"]},
+  { id:"tc013",category:"内容创作",name:"穿搭文案包",desc:"穿搭描述+风格定位+搭配公式",audience:"穿搭博主",features:["穿搭术语","风格定位","搭配公式","季节推荐"]},
+  { id:"tc014",category:"内容创作",name:"护肤知识包",desc:"成分解读+护肤步骤+产品推荐",audience:"美妆博主",features:["成分知识","护肤流程","产品测评","肤质分析"]},
+  { id:"tc015",category:"内容创作",name:"科普文章包",desc:"科普写作+通俗表达+权威引用",audience:"科普创作者",features:["通俗化表达","权威来源","图解辅助","系列规划"]},
+  { id:"tc016",category:"内容创作",name:"励志语录包",desc:"正能量文案+场景分类+多平台",audience:"励志博主",features:["语录分类","场景匹配","图文搭配","日更计划"]},
+  { id:"tc017",category:"内容创作",name:"起号策略包",desc:"账号定位+冷启动+内容规划",audience:"新账号运营",features:["定位分析","冷启动策略","内容日历","增长路径"]},
+  { id:"tc018",category:"内容创作",name:"音乐配文包",desc:"歌词引用+音乐推荐+氛围文案",audience:"音乐博主",features:["歌词引用","音乐推荐","氛围营造","歌单策划"]},
+  { id:"tc019",category:"内容创作",name:"美食文案包",desc:"美食描述+味觉词汇+摆盘建议",audience:"美食博主",features:["味觉词汇库","摆盘技巧","餐厅评价","食谱分享"]},
+  { id:"tc020",category:"内容创作",name:"旅游攻略包",desc:"行程规划+景点描述+预算控制",audience:"旅游博主",features:["行程模板","景点文案","预算表","拍照攻略"]},
+  { id:"tc021",category:"内容创作",name:"健身文案包",desc:"健身术语+动作描述+激励文案",audience:"健身博主",features:["专业术语","动作讲解","激励话术","饮食建议"]},
+  { id:"tc022",category:"内容创作",name:"育儿分享包",desc:"育儿经验+科学方法+亲子活动",audience:"育儿博主",features:["育儿知识","活动设计","产品测评","成长记录"]},
+  { id:"tc023",category:"内容创作",name:"职场干货包",desc:"职场技能+沟通技巧+简历优化",audience:"职场博主",features:["技能分享","沟通话术","简历模板","面试技巧"]},
+  { id:"tc024",category:"内容创作",name:"摄影教程包",desc:"拍摄技巧+后期处理+设备推荐",audience:"摄影博主",features:["构图技巧","参数设置","后期教程","设备评测"]},
+  { id:"tc025",category:"内容创作",name:"插画教程包",desc:"插画步骤+风格探索+工具推荐",audience:"插画博主",features:["步骤教程","风格分析","工具介绍","接单指南"]},
+  { id:"tc026",category:"内容创作",name:"vlog脚本包",desc:"vlog结构+转场设计+旁白撰写",audience:"vlog创作者",features:["脚本框架","转场创意","旁白模板","BGM推荐"]},
+  { id:"tc027",category:"内容创作",name:"知识付费文案包",desc:"课程描述+价值包装+转化话术",audience:"知识付费从业者",features:["课程包装","价值塑造","转化话术","学员见证"]},
+  { id:"tc028",category:"内容创作",name:"直播脚本包",desc:"直播流程+互动设计+促单话术",audience:"直播主播",features:["流程脚本","互动环节","促单技巧","应急话术"]},
+  { id:"tc029",category:"内容创作",name:"品牌故事包",desc:"品牌叙事+情感连接+价值传递",audience:"品牌运营",features:["故事框架","情感锚点","价值主张","视觉配合"]},
+  { id:"tc030",category:"内容创作",name:"产品文案包",desc:"产品描述+卖点提炼+场景植入",audience:"电商运营",features:["卖点提炼","场景描述","竞品对比","用户评价"]},
+  { id:"tc031",category:"内容创作",name:"节日营销包",desc:"节日借势+促销文案+氛围营造",audience:"营销人员",features:["节日日历","促销话术","氛围文案","活动策划"]},
+  { id:"tc032",category:"内容创作",name:"社群运营包",desc:"社群话术+活动策划+成员激活",audience:"社群运营",features:["欢迎话术","活动模板","激活策略","转化路径"]},
+  { id:"tc033",category:"内容创作",name:"小红书封面包",desc:"封面设计+配色方案+字体选择",audience:"小红书博主",features:["封面模板","配色指南","字体推荐","点击率优化"]},
+  { id:"tc034",category:"内容创作",name:"微信公众号排版包",desc:"排版规范+模板库+阅读体验优化",audience:"公众号运营",features:["排版模板","配色方案","字体规范","阅读节奏"]},
+  { id:"tc035",category:"内容创作",name:"视频标题生成包",desc:"标题公式+情绪词库+平台适配",audience:"视频创作者",features:["标题公式","情绪词汇","平台差异","A/B测试"]},
+  { id:"tc036",category:"内容创作",name:"评论互动包",desc:"评论回复+气氛引导+粉丝维护",audience:"自媒体运营",features:["回复模板","气氛营造","黑粉应对","粉丝互动"]},
+  { id:"tc037",category:"内容创作",name:"个人IP打造包",desc:"IP定位+形象设计+内容体系",audience:"个人品牌建设者",features:["定位分析","形象设计","内容矩阵","影响力增长"]},
+  { id:"tc038",category:"内容创作",name:"短视频脚本结构包",desc:"黄金3秒+反转设计+结尾引导",audience:"短视频创作者",features:["开头设计","反转模板","结尾引导","时长控制"]},
+  { id:"tc039",category:"内容创作",name:"内容日历规划包",desc:"选题规划+发布节奏+热点追踪",audience:"内容创作者",features:["选题库","发布日历","热点预警","数据复盘"]},
+  { id:"tc040",category:"内容创作",name:"用户画像分析包",desc:"粉丝画像+需求洞察+内容匹配",audience:"自媒体运营",features:["画像分析","需求挖掘","内容匹配","增长策略"]},
+  { id:"tc041",category:"内容创作",name:"跨平台内容分发包",desc:"一稿多发+平台适配+效率提升",audience:"多平台创作者",features:["分发策略","格式适配","时间管理","数据汇总"]},
+  { id:"tc042",category:"内容创作",name:"语音内容创作包",desc:"播客脚本+音频剪辑+声音训练",audience:"播客/音频创作者",features:["播客脚本","录音技巧","剪辑流程","声音美化"]},
+  { id:"tc043",category:"内容创作",name:"直播带货话术包",desc:"开场话术+产品介绍+逼单技巧",audience:"带货主播",features:["开场破冰","产品讲解","逼单话术","下播话术"]},
+  { id:"tc044",category:"内容创作",name:"内容变现策略包",desc:"变现路径+定价策略+渠道拓展",audience:"内容创业者",features:["变现模式","定价方法","渠道选择","收入优化"]},
+  { id:"tc045",category:"内容创作",name:"故事化写作包",desc:"故事结构+人物塑造+情感共鸣",audience:"写作者",features:["故事框架","人物设计","情感营造","节奏把控"]},
+  { id:"tc046",category:"内容创作",name:"数据分析报告包",desc:"数据解读+可视化+报告撰写",audience:"数据分析师",features:["数据收集","图表制作","报告结构","洞察提炼"]},
+  { id:"tc047",category:"内容创作",name:"新闻稿撰写包",desc:"新闻结构+5W1H+媒体发布",audience:"PR/企业宣传",features:["新闻框架","要素检查","发布渠道","危机预案"]},
+  { id:"tc048",category:"内容创作",name:"社交媒体运营全案包",desc:"全平台策略+内容矩阵+团队协作",audience:"社媒运营团队",features:["平台策略","内容规划","团队分工","KPI设定"]},
+  { id:"tc049",category:"内容创作",name:"创意灵感生成包",desc:"头脑风暴+创意技法+灵感管理",audience:"创意工作者",features:["创意方法","灵感捕捉","素材管理","创意评估"]},
+  { id:"tc050",category:"内容创作",name:"字幕文案包",desc:"字幕排版+双语对照+特效字幕",audience:"视频剪辑师",features:["字幕样式","双语模板","时间轴","特效字幕"]},
+  { id:"tc051",category:"内容创作",name:"广告文案包",desc:"广告语+卖点提炼+转化文案",audience:"广告从业者",features:["广告语创作","卖点提炼","转化设计","合规审查"]},
+  { id:"tc052",category:"内容创作",name:"剧本创作包",desc:"剧本格式+情节设计+对白撰写",audience:"编剧/创作者",features:["剧本格式","情节结构","对白技巧","人物弧光"]},
+  { id:"tc053",category:"内容创作",name:"幽默段子包",desc:"段子结构+笑点设计+场景应用",audience:"喜剧创作者",features:["段子公式","笑点节奏","场景适配","观众反馈"]},
+  { id:"tc054",category:"内容创作",name:"配音文案包",desc:"配音脚本+情绪标注+语速控制",audience:"配音演员",features:["脚本标注","情绪提示","语速标记","音效配合"]},
+  { id:"tc055",category:"内容创作",name:"电子书创作包",desc:"书籍结构+章节规划+排版输出",audience:"电子书作者",features:["大纲设计","章节撰写","排版规范","发布平台"]},
+  { id:"tc056",category:"内容创作",name:"海报文案包",desc:"海报标题+视觉配合+信息层级",audience:"设计师/运营",features:["标题创作","信息层级","字体搭配","视觉引导"]},
+  { id:"tc057",category:"内容创作",name:"播客节目策划包",desc:"节目定位+嘉宾邀请+话题设计",audience:"播客主理人",features:["节目定位","嘉宾沟通","话题设计","后期制作"]},
+  { id:"tc058",category:"内容创作",name:"知识图谱构建包",desc:"知识梳理+关联建立+可视化",audience:"知识管理者",features:["知识提取","关系建立","图谱可视化","持续更新"]},
+  { id:"tc059",category:"内容创作",name:"多语言内容包",desc:"翻译优化+文化适配+本地化",audience:"出海内容团队",features:["翻译技巧","文化适配","本地化","多语言SEO"]},
+  { id:"tc060",category:"内容创作",name:"AIGC内容生产包",desc:"AI写作+提示词+人工优化",audience:"AI内容创作者",features:["提示词模板","AI协作流程","质量审核","原创保护"]},
+  { id:"ts001",category:"销售客服",name:"房产销售训练包",desc:"房源描述+带看话术+逼定技巧",audience:"房产经纪人",features:["房源讲解","带看流程","谈判技巧","售后跟进"]},
+  { id:"ts002",category:"销售客服",name:"私域销售训练包",desc:"私域引流+信任建立+复购策略",audience:"私域运营",features:["引流方法","IP打造","社群运营","复购提升"]},
+  { id:"ts003",category:"销售客服",name:"朋友圈卖货训练包",desc:"朋友圈人设+产品展示+成交话术",audience:"微商/私域",features:["人设打造","产品文案","互动设计","成交话术"]},
+  { id:"ts004",category:"销售客服",name:"淘宝客服训练包",desc:"售前接待+催单技巧+售后处理",audience:"淘宝客服",features:["售前话术","催单技巧","差评处理","老客维护"]},
+  { id:"ts005",category:"销售客服",name:"美团运营训练包",desc:"店铺装修+评价管理+活动策划",audience:"美团商家",features:["店铺优化","好评引导","活动设计","数据分析"]},
+  { id:"ts006",category:"销售客服",name:"保险销售训练包",desc:"需求分析+方案呈现+异议处理",audience:"保险代理人",features:["需求挖掘","方案讲解","异议应对","转介绍"]},
+  { id:"ts007",category:"销售客服",name:"汽车销售训练包",desc:"车型介绍+试驾引导+交车仪式",audience:"汽车销售",features:["产品知识","试驾流程","竞品对比","交车服务"]},
+  { id:"ts008",category:"销售客服",name:"教育课程销售包",desc:"课程介绍+试听转化+学情分析",audience:"教育销售",features:["课程价值","试听转化","学情沟通","续费策略"]},
+  { id:"ts009",category:"销售客服",name:"电话销售训练包",desc:"开场白+需求挖掘+异议处理",audience:"电销人员",features:["开场话术","需求提问","异议化解","邀约技巧"]},
+  { id:"ts010",category:"销售客服",name:"面销技巧训练包",desc:"形象管理+肢体语言+成交信号",audience:"面销人员",features:["第一印象","肢体语言","成交识别","跟进策略"]},
+  { id:"ts011",category:"销售客服",name:"微信销售训练包",desc:"微信沟通+朋友圈运营+标签管理",audience:"微信销售",features:["沟通节奏","标签体系","朋友圈配合","转账引导"]},
+  { id:"ts012",category:"销售客服",name:"客户异议处理包",desc:"常见异议+应对策略+心态管理",audience:"销售人员",features:["异议分类","应对话术","心态建设","案例库"]},
+  { id:"ts013",category:"销售客服",name:"高净值客户服务包",desc:"高端服务+需求定制+长期维护",audience:"高端销售",features:["服务标准","个性化方案","圈层活动","专属维护"]},
+  { id:"ts014",category:"销售客服",name:"跨境销售训练包",desc:"跨文化沟通+国际物流+支付方案",audience:"外贸销售",features:["文化差异","物流方案","支付方式","信用保障"]},
+  { id:"ts015",category:"销售客服",name:"销售团队管理包",desc:"目标分解+过程管理+激励设计",audience:"销售管理者",features:["目标管理","过程追踪","激励机制","培训体系"]},
+  { id:"ts016",category:"销售客服",name:"客户关系维护包",desc:"客户分层+定期跟进+满意度提升",audience:"客户经理",features:["客户分层","跟进计划","满意度调研","流失预警"]},
+  { id:"ts017",category:"销售客服",name:"销售数据分析包",desc:"漏斗分析+转化率优化+预测模型",audience:"销售运营",features:["漏斗构建","转化分析","预测模型","报表呈现"]},
+  { id:"ts018",category:"销售客服",name:"投诉处理训练包",desc:"情绪安抚+问题解决+转危为机",audience:"客服人员",features:["情绪安抚","快速解决","补偿方案","客户挽回"]}
+];
+
+function getAllTrainingPacks() {
+  const custom = JSON.parse(localStorage.getItem('scai_custom_training') || '[]');
+  if (custom.length > 0) {
+    const merged = [...ALL_TRAINING_PACKS];
+    custom.forEach(ct => {
+      if (ct._deleted) { const idx = merged.findIndex(t => t.id === ct.id); if (idx >= 0) merged.splice(idx, 1); }
+      else { const idx = merged.findIndex(t => t.id === ct.id); if (idx >= 0) merged[idx] = ct; else merged.push(ct); }
+    });
+    return merged;
+  }
+  return ALL_TRAINING_PACKS;
+}
+
+function getTrainingByCategory() {
+  const cats = {};
+  ALL_TRAINING_PACKS.forEach(t => { if (!cats[t.category]) cats[t.category] = []; cats[t.category].push(t); });
+  return cats;
+}
+
+function buildTrainingPage() {
+  const grid = document.getElementById('trainingGrid');
+  if (!grid) return;
+  const cats = getTrainingByCategory();
+  const catIcons = { '内容创作':'📝','销售客服':'💼','电商带货':'🛒','教育培训':'📚','工具教程':'🔧','个人IP':'👤','本地生活':'🏠','健康生活':'🧘','亲子教育':'👶','职场创业':'💼','科技趋势':'🚀','增值包':'⭐' };
+  grid.innerHTML = Object.keys(cats).map(cat => {
+    const packs = cats[cat];
+    return `<div class="training-cat-card" onclick="showTrainingDetail('${cat}')"><div class="cat-icon">${catIcons[cat]||'📦'}</div><div class="cat-name">${cat}</div><div class="cat-count">${packs.length}个训练包</div><span class="tag tag-free" style="margin-top:8px;">免费</span></div>`;
+  }).join('');
+}
+
+function showTrainingDetail(cat) {
+  const detail = document.getElementById('trainingDetail');
+  if (!detail) return;
+  const packs = getAllTrainingPacks().filter(t => t.category === cat);
+  detail.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h3 style="color:var(--gold);">${cat}（${packs.length}个）</h3><button class="btn btn-sm btn-outline" onclick="document.getElementById('trainingDetail').classList.remove('open')">✕ 收起</button></div>${packs.map(p => `<div class="training-pack-card"><div style="flex:1;"><strong style="color:var(--text-primary);">🧠 ${p.name}</strong><p style="color:var(--text-secondary);font-size:12px;margin:4px 0;">${p.desc}</p><p style="color:var(--text-muted);font-size:11px;">适用：${p.audience}</p></div><div style="display:flex;gap:8px;flex-shrink:0;"><button class="btn btn-sm btn-primary network-dependent" onclick="showToast('📥 ${p.name} 下载中（夸克网盘）');window.open('${QUARK_MAIN}','_blank')">📥 下载</button><button class="btn btn-sm btn-outline" onclick="copyText('${p.name} 训练包提示词');showToast('已复制提示词')">📋 复制提示词</button></div></div>`).join('')}`;
+  detail.classList.add('open');
+  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  speakText(cat + '分类，共' + packs.length + '个训练包');
+}
+
+// ─── 旗舰产品 ───
+const FLAGSHIP_PRODUCTS = [
+  { id:"flagship-001",name:"内容合规优化大师",icon:"🛡️",desc:"多平台违禁词扫描+AI味检测，确保内容合规安全",features:["违禁词库实时更新","AI生成内容检测","多平台规则适配","优化建议自动生成","批量检测报告"]},
+  { id:"flagship-002",name:"关键词大师",icon:"🔑",desc:"正向生成+反向拆解+跨平台风格锁定",features:["智能关键词生成","竞品关键词分析","跨平台风格适配","搜索量预估","长尾词挖掘"]},
+  { id:"flagship-003",name:"游戏全案策划",icon:"🎮",desc:"完整设计方案+平台适配+商业化分析",features:["游戏方案自动生成","多平台适配分析","商业化模型设计","数值平衡校验","玩家心理分析"]},
+  { id:"flagship-004",name:"质量保证系统",icon:"✅",desc:"五维检测+质量评级+闭环迭代",features:["五维质量评分","自动化检测流程","质量报告生成","问题闭环追踪","迭代建议输出"]},
+  { id:"flagship-005",name:"师徒带练系统",icon:"👨‍🏫",desc:"30天从零到会用+任务卡+自生长",features:["30天学习路径","每日任务卡片","进度可视化追踪","AI导师实时答疑","学习社区互动"]},
+  { id:"flagship-006",name:"蓝天守护·救援队",icon:"🚁",desc:"任务出队+知识库+心灵守护",features:["救援任务管理","专业知识库","队员心理关怀","装备物资管理","训练考核系统"]},
+  { id:"flagship-007",name:"成长伴侣",icon:"🌱",desc:"情绪感知+学习方法+班级管理",features:["情绪智能识别","个性化学习建议","班级整体分析","成长轨迹记录","家校沟通桥梁"]},
+  { id:"flagship-008",name:"房产销冠工作站",icon:"🏠",desc:"房源管理+客户跟进+AI教练",features:["房源信息管理","客户跟进系统","AI销售教练","带看日程安排","成交数据分析"]},
+  { id:"flagship-009",name:"游戏模板工厂",icon:"🏭",desc:"方案生成+工程执行单+品牌植入",features:["8大游戏类型模板","工程执行单生成","品牌植入方案","关卡设计工具","多平台导出"]},
+  { id:"flagship-010",name:"生态展厅",icon:"🏛️",desc:"产品矩阵+技术实力+品牌背书",features:["产品矩阵展示","技术架构演示","品牌实力背书","客户案例展示","互动体验设计"]}
+];
+
+function buildFlagshipPage() {
+  const grid = document.getElementById('flagshipGrid');
+  if (!grid) return;
+  grid.innerHTML = FLAGSHIP_PRODUCTS.map((fp, idx) => `<div class="flagship-card" onclick="openFlagshipDetail(${idx})"><div class="fs-icon">${fp.icon}</div><div class="fs-name">${idx+1}. ${fp.name}</div><div class="fs-desc">${fp.desc}</div><ul class="fs-features">${fp.features.map(f => `<li>${f}</li>`).join('')}</ul><button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="event.stopPropagation();openFlagshipDetail(${idx})">📥 了解更多</button></div>`).join('');
+}
+
+function openFlagshipDetail(idx) {
+  const fp = FLAGSHIP_PRODUCTS[idx];
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `<div class="modal-overlay" onclick="closeModal()"><div class="modal" style="max-width:550px;" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">✕</button><div style="text-align:center;margin-bottom:16px;"><span style="font-size:64px;">${fp.icon}</span><h3 style="color:var(--gold);">${fp.name}</h3><p style="color:var(--text-secondary);font-size:14px;">${fp.desc}</p></div><div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">✨ 功能亮点</strong><ul style="color:var(--text-secondary);font-size:13px;padding-left:20px;margin-top:4px;">${fp.features.map(f => `<li>${f}</li>`).join('')}</ul></div><p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:16px;">💡 咨询详情：<a href="tel:18172745962" style="color:var(--gold);">18172745962</a></p></div></div>`;
+  showToast('🚀 ' + fp.name + ' 详情已打开');
+}
+
+// ─── 定制页 ───
+function buildCustomPage() {
+  const grid = document.getElementById('customGrid');
+  if (!grid) return;
+  const services = [
+    { icon:'🎨',title:'品牌替换',desc:'换成你的Logo+品牌色+联系方式' },
+    { icon:'🔧',title:'功能增删',desc:'按需定制，只保留你需要的' },
+    { icon:'🔗',title:'系统对接',desc:'集成企业现有系统' },
+    { icon:'🏠',title:'私有部署',desc:'独立服务器，数据完全自控' }
+  ];
+  grid.innerHTML = services.map(s => `<div class="custom-card"><div class="cc-icon">${s.icon}</div><div class="cc-title">${s.title}</div><p style="color:var(--text-secondary);font-size:12px;margin-top:4px;">${s.desc}</p></div>`).join('');
+}
+
+// ─── 关于页 ───
+function buildAboutPage() {
+  const pg = document.getElementById('principlesGrid');
+  const cg = document.getElementById('capabilitiesGrid');
+  if (pg) {
+    const principles = [
+      { icon:'🤝',title:'不评判',desc:'不给对错判断，只给方向和选择' },
+      { icon:'🧩',title:'切小块',desc:'每次只解决一件事，降低负担' },
+      { icon:'💞',title:'真实连接',desc:'用真实案例和共情建立信任' },
+      { icon:'🌉',title:'做桥梁',desc:'帮人连接更好的自己，不替代成长' }
+    ];
+    pg.innerHTML = principles.map(p => `<div class="about-card"><div class="ac-icon">${p.icon}</div><div class="ac-title">${p.title}</div><div class="ac-desc">${p.desc}</div></div>`).join('');
+  }
+  if (cg) {
+    const caps = [
+      { icon:'🧠',title:'智能体训练包',desc:'144个·12大分类' },
+      { icon:'📱',title:'免费工具',desc:'48款·全部免费' },
+      { icon:'🏗️',title:'企业定制',desc:'品牌替换+功能增删' },
+      { icon:'👨‍🏫',title:'学习班',desc:'手把手教AI' }
+    ];
+    cg.innerHTML = caps.map(c => `<div class="about-card"><div class="ac-icon">${c.icon}</div><div class="ac-title">${c.title}</div><div class="ac-desc">${c.desc}</div></div>`).join('');
+  }
+}
+
+// ─── 管理后台 ───
+function openAdminPanel() {
+  const modal = document.getElementById('modalContainer');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeAdminPanel()"><div class="modal" style="max-width:900px;max-height:90vh;padding:0;" onclick="event.stopPropagation()">
+      <div class="admin-panel">
+        <div class="admin-header"><h3>🛠️ 善春AI · 管理后台</h3><button class="modal-close" style="position:static;" onclick="closeAdminPanel()">✕</button></div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchAdminTab('products')">📱 产品管理</button>
+          <button class="admin-tab" onclick="switchAdminTab('training')">🧠 训练包管理</button>
+          <button class="admin-tab" onclick="switchAdminTab('links')">🔗 下载链接</button>
+          <button class="admin-tab" onclick="switchAdminTab('backup')">💾 备份恢复</button>
+        </div>
+        <div class="admin-body" id="adminBody"></div>
+      </div>
+    </div></div>`;
+  switchAdminTab('products');
+}
+
+function closeAdminPanel() { document.getElementById('modalContainer').innerHTML = ''; adminEditId = null; buildProductGrid(appSearchTerm); buildTrainingPage(); }
+
+function switchAdminTab(tab) {
+  adminCurrentTab = tab;
+  document.querySelectorAll('.admin-tab').forEach((t,i) => t.classList.toggle('active', ['products','training','links','backup'][i] === tab));
+  const body = document.getElementById('adminBody');
+  switch(tab) {
+    case 'products': renderAdminProducts(); break;
+    case 'training': renderAdminTraining(); break;
+    case 'links': renderAdminLinks(); break;
+    case 'backup': renderAdminBackup(); break;
+  }
+}
+
+function renderAdminProducts() {
+  const products = getAllProducts();
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><span style="color:var(--text-secondary);font-size:13px;">共 ${products.length} 款产品</span><button class="btn btn-primary btn-sm" onclick="openAdminProductForm()">+ 添加产品</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>图标</th><th>名称</th><th>分类</th><th>版本</th><th>状态</th><th>操作</th></tr></thead><tbody>${products.map(p => `<tr><td><span style="font-size:24px;">${p.icon}</span></td><td><strong style="color:var(--text-primary);">${p.name}</strong><br><small style="color:var(--text-muted);">${p.painPoint}</small></td><td>${p.category}</td><td>${p.version}</td><td><span class="tag tag-${p.status==='online'?'online':p.status==='pending'?'pending':'planning'}">${p.status==='online'?'上线':p.status==='pending'?'待生成':'规划中'}</span></td><td><button class="btn btn-sm btn-outline" onclick="openAdminProductForm('${p.id}')">✏️</button><button class="btn btn-sm btn-outline" onclick="deleteAdminProduct('${p.id}')">🗑️</button><button class="btn btn-sm btn-outline" onclick="toggleProductStatus('${p.id}')">🔄</button></td></tr>`).join('')}</tbody></table></div>`;
+}
+
+function openAdminProductForm(editId = null) {
+  adminEditId = editId;
+  const p = editId ? getAllProducts().find(prod => prod.id === editId) : null;
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<div style="margin-bottom:16px;"><button class="btn btn-sm btn-outline" onclick="switchAdminTab('products')">← 返回列表</button></div><h4 style="color:var(--gold);margin-bottom:16px;">${editId?'✏️ 编辑产品':'➕ 添加产品'}</h4><form class="admin-form" onsubmit="saveAdminProduct(event)"><div class="form-row"><label>产品ID</label><input type="text" id="ap-id" value="${p?p.id:''}" ${p?'readonly':''} required></div><div class="form-row"><label>名称</label><input type="text" id="ap-name" value="${p?p.name:''}" required></div><div class="form-row"><label>图标 Emoji</label><input type="text" id="ap-icon" value="${p?p.icon:''}" required></div><div class="form-row"><label>分类</label><select id="ap-category">${['办公工具','数学学习','英语学习','语文学习','考试冲刺','创意娱乐','健康生活','综合工具'].map(c => `<option value="${c}" ${p&&p.category===c?'selected':''}>${c}</option>`).join('')}</select></div><div class="form-row"><label>痛点</label><input type="text" id="ap-pain" value="${p?p.painPoint:''}" required></div><div class="form-row"><label>描述</label><input type="text" id="ap-desc" value="${p?p.description:''}" required></div><div class="form-row"><label>版本</label><input type="text" id="ap-version" value="${p?p.version:'V1.0'}" required></div><div class="form-row"><label>文件大小</label><input type="text" id="ap-size" value="${p?p.fileSize:'400KB'}" required></div><div class="form-row"><label>平台</label><input type="text" id="ap-platforms" value="${p?p.platforms:'电脑/平板/手机'}" required></div><div class="form-row"><label>功能（每行一个）</label><textarea id="ap-features" rows="4" required>${p?p.features.join('\n'):''}</textarea></div><div class="form-row"><label>夸克链接</label><input type="text" id="ap-quark" value="${p?p.downloadLinks.quark:'https://pan.quark.cn/s/ac0b44a6f0e9'}"></div><div class="form-row"><label>蓝奏链接</label><input type="text" id="ap-lanzou" value="${p?p.downloadLinks.lanzou:'https://wwr.lanzoui.com/b002vyhn2b'}"></div><div class="form-row"><label>百度链接</label><input type="text" id="ap-baidu" value="${p?p.downloadLinks.baidu:'https://pan.baidu.com/s/xxxxx'}"></div><div class="form-row"><label>状态</label><select id="ap-status"><option value="online" ${p&&p.status==='online'?'selected':''}>上线</option><option value="pending" ${p&&p.status==='pending'?'selected':''}>待生成</option><option value="planning" ${p&&p.status==='planning'?'selected':''}>规划中</option></select></div><button type="submit" class="btn btn-primary">💾 保存</button></form>`;
+}
+
+function saveAdminProduct(event) {
+  event.preventDefault();
+  const product = {
+    id: document.getElementById('ap-id').value.trim(),
+    name: document.getElementById('ap-name').value.trim(),
+    icon: document.getElementById('ap-icon').value.trim(),
+    category: document.getElementById('ap-category').value,
+    painPoint: document.getElementById('ap-pain').value.trim(),
+    description: document.getElementById('ap-desc').value.trim(),
+    version: document.getElementById('ap-version').value.trim(),
+    fileSize: document.getElementById('ap-size').value.trim(),
+    platforms: document.getElementById('ap-platforms').value.trim(),
+    features: document.getElementById('ap-features').value.split('\n').filter(f => f.trim()),
+    downloadLinks: {
+      quark: document.getElementById('ap-quark').value.trim(),
+      lanzou: document.getElementById('ap-lanzou').value.trim(),
+      baidu: document.getElementById('ap-baidu').value.trim()
+    },
+    status: document.getElementById('ap-status').value
+  };
+  let custom = JSON.parse(localStorage.getItem('scai_custom_products') || '[]');
+  if (adminEditId) {
+    const idx = custom.findIndex(p => p.id === adminEditId);
+    if (idx >= 0) custom[idx] = product; else custom.push(product);
+  } else { custom.push(product); }
+  localStorage.setItem('scai_custom_products', JSON.stringify(custom));
+  showToast('✅ 产品已保存：' + product.name);
+  adminEditId = null;
+  switchAdminTab('products');
+  buildProductGrid(appSearchTerm);
+  buildAccordion();
+}
+
+function deleteAdminProduct(id) {
+  if (!confirm('确定删除产品：' + id + '？')) return;
+  let custom = JSON.parse(localStorage.getItem('scai_custom_products') || '[]');
+  custom = custom.filter(p => p.id !== id);
+  custom.push({ id, _deleted: true });
+  localStorage.setItem('scai_custom_products', JSON.stringify(custom));
+  showToast('🗑️ 产品已删除');
+  switchAdminTab('products');
+  buildProductGrid(appSearchTerm);
+  buildAccordion();
+}
+
+function toggleProductStatus(id) {
+  let custom = JSON.parse(localStorage.getItem('scai_custom_products') || '[]');
+  let p = custom.find(prod => prod.id === id);
+  if (!p) { const orig = ALL_PRODUCTS.find(prod => prod.id === id); if (orig) { p = {...orig}; custom.push(p); } }
+  if (p) { const statuses = ['online','pending','planning']; p.status = statuses[(statuses.indexOf(p.status)+1)%3]; localStorage.setItem('scai_custom_products', JSON.stringify(custom)); showToast('🔄 状态已切换'); switchAdminTab('products'); buildProductGrid(appSearchTerm); }
+}
+
+function renderAdminTraining() {
+  const packs = getAllTrainingPacks();
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><span style="color:var(--text-secondary);font-size:13px;">共 ${packs.length} 个训练包</span><button class="btn btn-primary btn-sm" onclick="openAdminTrainingForm()">+ 添加</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>名称</th><th>分类</th><th>适用人群</th><th>操作</th></tr></thead><tbody>${packs.slice(0,50).map(t => `<tr><td><strong style="color:var(--text-primary);">🧠 ${t.name}</strong></td><td>${t.category}</td><td><small>${t.audience}</small></td><td><button class="btn btn-sm btn-outline" onclick="openAdminTrainingForm('${t.id}')">✏️</button><button class="btn btn-sm btn-outline" onclick="deleteAdminTraining('${t.id}')">🗑️</button></td></tr>`).join('')}</tbody></table>${packs.length>50?`<p style="color:var(--text-muted);text-align:center;padding:12px;">显示前50条，共${packs.length}条</p>`:''}</div>`;
+}
+
+function openAdminTrainingForm(editId = null) {
+  adminEditId = editId;
+  const t = editId ? getAllTrainingPacks().find(tp => tp.id === editId) : null;
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<div style="margin-bottom:16px;"><button class="btn btn-sm btn-outline" onclick="switchAdminTab('training')">← 返回</button></div><h4 style="color:var(--gold);margin-bottom:16px;">${editId?'✏️ 编辑':'➕ 添加'}训练包</h4><form class="admin-form" onsubmit="saveAdminTraining(event)"><div class="form-row"><label>ID</label><input type="text" id="at-id" value="${t?t.id:''}" ${t?'readonly':''} required></div><div class="form-row"><label>名称</label><input type="text" id="at-name" value="${t?t.name:''}" required></div><div class="form-row"><label>分类</label><select id="at-category">${['内容创作','销售客服','电商带货','教育培训','工具教程','个人IP','本地生活','健康生活','亲子教育','职场创业','科技趋势','增值包'].map(c => `<option value="${c}" ${t&&t.category===c?'selected':''}>${c}</option>`).join('')}</select></div><div class="form-row"><label>描述</label><input type="text" id="at-desc" value="${t?t.desc:''}" required></div><div class="form-row"><label>适用人群</label><input type="text" id="at-audience" value="${t?t.audience:''}" required></div><div class="form-row"><label>功能</label><textarea id="at-features" rows="3">${t?t.features.join('\n'):''}</textarea></div><button type="submit" class="btn btn-primary">💾 保存</button></form>`;
+}
+
+function saveAdminTraining(event) {
+  event.preventDefault();
+  const tp = {
+    id: document.getElementById('at-id').value.trim(),
+    name: document.getElementById('at-name').value.trim(),
+    category: document.getElementById('at-category').value,
+    desc: document.getElementById('at-desc').value.trim(),
+    audience: document.getElementById('at-audience').value.trim(),
+    features: document.getElementById('at-features').value.split('\n').filter(f => f.trim())
+  };
+  let custom = JSON.parse(localStorage.getItem('scai_custom_training') || '[]');
+  if (adminEditId) { const idx = custom.findIndex(t => t.id === adminEditId); if (idx >= 0) custom[idx] = tp; else custom.push(tp); }
+  else { custom.push(tp); }
+  localStorage.setItem('scai_custom_training', JSON.stringify(custom));
+  showToast('✅ 训练包已保存');
+  adminEditId = null; switchAdminTab('training'); buildTrainingPage();
+}
+
+function deleteAdminTraining(id) {
+  if (!confirm('确定删除训练包：' + id + '？')) return;
+  let custom = JSON.parse(localStorage.getItem('scai_custom_training') || '[]');
+  custom = custom.filter(t => t.id !== id);
+  custom.push({ id, _deleted: true });
+  localStorage.setItem('scai_custom_training', JSON.stringify(custom));
+  showToast('🗑️ 训练包已删除');
+  switchAdminTab('training'); buildTrainingPage();
+}
+
+function renderAdminLinks() {
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<p style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;">全局默认下载链接</p><form class="admin-form" onsubmit="saveGlobalLinks(event)"><div class="form-row"><label>夸克网盘</label><input type="text" id="gl-quark" value="${localStorage.getItem('scai_global_quark')||QUARK_MAIN}"></div><div class="form-row"><label>蓝奏云</label><input type="text" id="gl-lanzou" value="${localStorage.getItem('scai_global_lanzou')||LANZOU_BAK}"></div><div class="form-row"><label>百度网盘</label><input type="text" id="gl-baidu" value="${localStorage.getItem('scai_global_baidu')||''}"></div><button type="submit" class="btn btn-primary">💾 保存</button></form>`;
+}
+
+function saveGlobalLinks(event) {
+  event.preventDefault();
+  localStorage.setItem('scai_global_quark', document.getElementById('gl-quark').value.trim());
+  localStorage.setItem('scai_global_lanzou', document.getElementById('gl-lanzou').value.trim());
+  localStorage.setItem('scai_global_baidu', document.getElementById('gl-baidu').value.trim());
+  showToast('✅ 全局链接已保存');
+}
+
+function renderAdminBackup() {
+  const body = document.getElementById('adminBody');
+  body.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;"><div class="backup-card"><h4 style="color:var(--gold);">📤 导出备份</h4><p style="color:var(--text-secondary);font-size:13px;">导出全部数据为JSON</p><button class="btn btn-primary" onclick="exportFullBackup()" style="margin-top:12px;">📤 导出全部</button><button class="btn btn-outline" onclick="exportData()" style="margin-top:8px;">📦 仅导出产品</button></div><div class="backup-card"><h4 style="color:var(--gold);">📥 恢复备份</h4><p style="color:var(--text-secondary);font-size:13px;">从JSON恢复数据</p><input type="file" id="backupFile" accept=".json" style="display:none;" onchange="importFullBackup(event)"><button class="btn btn-primary" onclick="document.getElementById('backupFile').click()" style="margin-top:12px;">📥 选择文件</button><button class="btn btn-outline" onclick="resetToDefault()" style="margin-top:8px;">🔄 恢复默认</button></div></div><div style="margin-top:24px;padding:16px;background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border-color);"><h4 style="color:var(--text-primary);margin-bottom:8px;">📊 数据统计</h4><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:13px;"><div><strong style="color:var(--gold);">${getAllProducts().length}</strong><br><span style="color:var(--text-muted);">产品</span></div><div><strong style="color:var(--gold);">${getAllTrainingPacks().length}</strong><br><span style="color:var(--text-muted);">训练包</span></div><div><strong style="color:var(--gold);">${localStorage.getItem('scai_custom_products')?'有':'无'}</strong><br><span style="color:var(--text-muted);">产品自定义</span></div><div><strong style="color:var(--gold);">${localStorage.getItem('scai_custom_training')?'有':'无'}</strong><br><span style="color:var(--text-muted);">训练包自定义</span></div></div></div>`;
+}
+
+function exportFullBackup() {
+  const data = { version:APP_VERSION, exportDate:new Date().toISOString(), products:getAllProducts(), trainingPacks:getAllTrainingPacks(), globalLinks:{ quark:localStorage.getItem('scai_global_quark')||QUARK_MAIN, lanzou:localStorage.getItem('scai_global_lanzou')||LANZOU_BAK, baidu:localStorage.getItem('scai_global_baidu')||'' } };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'scai-full-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(url); showToast('✅ 完整备份已导出');
+}
+
+function importFullBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.products) localStorage.setItem('scai_custom_products', JSON.stringify(data.products));
+      if (data.trainingPacks) localStorage.setItem('scai_custom_training', JSON.stringify(data.trainingPacks));
+      if (data.globalLinks) { if(data.globalLinks.quark) localStorage.setItem('scai_global_quark', data.globalLinks.quark); if(data.globalLinks.lanzou) localStorage.setItem('scai_global_lanzou', data.globalLinks.lanzou); if(data.globalLinks.baidu) localStorage.setItem('scai_global_baidu', data.globalLinks.baidu); }
+      showToast('✅ 数据已恢复，即将刷新');
+      setTimeout(() => location.reload(), 1500);
+    } catch(err) { showToast('❌ 文件格式错误'); }
+  };
+  reader.readAsText(file);
+}
+
+function resetToDefault() {
+  if (!confirm('确定恢复默认数据？所有自定义修改将丢失。')) return;
+  localStorage.removeItem('scai_custom_products');
+  localStorage.removeItem('scai_custom_training');
+  localStorage.removeItem('scai_global_quark');
+  localStorage.removeItem('scai_global_lanzou');
+  localStorage.removeItem('scai_global_baidu');
+  showToast('✅ 已恢复默认，即将刷新');
+  setTimeout(() => location.reload(), 1500);
+}
+
+// ─── 设置面板 ───
+function createSettingsPanel() {
+  const panel = document.createElement('div');
+  panel.className = 'settings-panel';
+  panel.id = 'settingsPanel';
+  panel.innerHTML = `
+    <button onclick="toggleSound()">${soundEnabled?'🔊':'🔇'} 语音</button>
+    <button onclick="cycleTheme()">🎨 主题</button>
+    <button onclick="checkUpdate()">🔄 更新</button>
+    <button onclick="speakText('善春AI产品商店，48款免费工具，144个训练包，全部免费下载')">📢 朗读</button>
+  `;
+  document.body.appendChild(panel);
+}
+
+// ─── 全局初始化 ───
+function fullInit() {
+  createSettingsPanel();
+  buildTrainingPage();
+  buildFlagshipPage();
+  buildCustomPage();
+  buildAboutPage();
+  buildProductGrid();
+  buildAccordion();
+  updateNetworkStatus();
+
+  console.log('%c🌟 善春AI·产品商店 V4.0 %c完整初始化完成', 'color:#D4C290;font-size:18px;font-weight:bold;', '');
+  console.log('%c📊 数据概览：%c48款工具 %c| %c144个训练包 %c| %c10款旗舰 %c| %c管理后台就绪',
+    'color:#F8F9FC;', 'color:#D4C290;', 'color:#B0B8CC;', 'color:#7B68EE;', 'color:#B0B8CC;', 'color:#5B8C7A;', 'color:#B0B8CC;', 'color:#FF9800;');
+  console.log('%cDNA: SCAI-STORE-V4.0-20260613 %c| %c善春AI %c| %c安远县趣玩网络科技工作室',
+    'color:#D4C290;', 'color:#B0B8CC;', 'color:#7B68EE;', 'color:#B0B8CC;', 'color:#5B8C7A;');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fullInit();
+  initHero();
+  setTimeout(animateStats, 500);
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { animateStats(); statsObserver.unobserve(entry.target); } });
+  }, { threshold: 0.5 });
+  const statsRow = document.getElementById('statsRow');
+  if (statsRow) statsObserver.observe(statsRow);
+});
+
+// ─── 键盘快捷键 ───
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'f') { e.preventDefault(); const si = document.getElementById('appSearch'); if (si) { navigateTo('apps'); setTimeout(() => si.focus(), 400); } }
+  if (e.ctrlKey && e.key === 's') { e.preventDefault(); showToast('💾 数据已自动保存到本地浏览器'); }
+});
+
+// ─── 窗口resize防抖 ───
+let resizeDebounce;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeDebounce);
+  resizeDebounce = setTimeout(() => { buildProductGrid(appSearchTerm); buildTrainingPage(); }, 300);
+});
+</script>
+
+</body>
+</html>
